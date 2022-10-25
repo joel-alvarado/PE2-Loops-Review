@@ -2,9 +2,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#define pi 3.14159265358979323846
 
 using namespace std;
-static constexpr double pi = 3.14159265358979323846;
 
 class Shape {
 
@@ -13,7 +13,7 @@ class Shape {
 
     public:
         Shape(string shapeName) { this->shapeType = shapeName; }
-        virtual int getArea() = 0;
+        virtual double getArea() = 0;
         string getShapeType() {
             return this->shapeType;
         }
@@ -40,7 +40,7 @@ class Square : public Shape {
             this->sideSize = sideSize ;
         }
 
-        int getArea() {
+        double getArea() {
             return sideSize * sideSize;
         }
 };
@@ -57,7 +57,7 @@ class Triangle : public Shape {
             this->height = height;
         }
 
-        int getArea() {
+        double getArea() {
             return (base * height) / 2;
         }
 };
@@ -71,7 +71,8 @@ class Circle : public Shape {
             this->radius = radius;
         }
 
-        int getArea() {
+        
+        double getArea() {
             return pi * radius * radius;
         }
 
@@ -92,8 +93,8 @@ class Excercises {
         }
 
         /*Returns the biggest area of a given vector of shapes*/
-        static int largestArea(vector<Shape*> v) {
-            int largest = v[0]->getArea();
+        static double largestArea(vector<Shape*> v) {
+            double largest = v[0]->getArea();
             for(int i = 0; i < v.size(); i++) {
                 if(largest < v[i]->getArea()) {
                     largest = v[i]->getArea();
@@ -104,7 +105,7 @@ class Excercises {
 
         /*Returns the average area of all the shapes in a vector*/
         static int averageArea(vector<Shape*> v) {
-            int total = 0;
+            double total = 0;
             for(int i = 0; i < v.size(); i++) {
                 total += v[i]->getArea();
             }
@@ -116,7 +117,7 @@ class Excercises {
         static bool hasDuplicates(vector<Shape*> v) {
             vector<Shape*> uniques;
             for(Shape* s: v) {
-                if (!s->exists(v)) {
+                if (!s->exists(uniques)) {
                     uniques.push_back(s);
                 } else {
                     return true;
@@ -151,12 +152,15 @@ class Excercises {
         Example: v1 = [0 1 2 3 4], v2 = [0 1 5 6 7], union(v1, v2) = [0 1 2 3 4 5 6 7]
         Utilize the exists() method to verify if a shape exists in a specific vector.*/
         static vector<Shape*> vectorUnion(vector<Shape*> v1, vector<Shape*> v2) {
+
+            vector<Shape*> v_union = vector<Shape*>(v1);
+
             for(Shape* s: v2) {
                 if(!s->exists(v1)) {
-                    v1.push_back(s);
+                    v_union.push_back(s);
                 }
             }
-            return v1;
+            return v_union;
         }
 
         /*Returns a new vector which represents the intersection of 2 vectors.
