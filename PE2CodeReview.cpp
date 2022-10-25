@@ -9,13 +9,13 @@ static constexpr double pi = 3.14159265358979323846;
 class Shape {
 
     private:
-        string shape_type;
+        string shapeType;
 
     public:
-        Shape(string shape_name) { this->shape_type = shape_name; }
-        virtual int get_area() = 0;
-        string get_shape_type() {
-            return this->shape_type;
+        Shape(string shapeName) { this->shapeType = shapeName; }
+        virtual int getArea() = 0;
+        string getShapeType() {
+            return this->shapeType;
         }
 
 
@@ -23,7 +23,7 @@ class Shape {
         an existing element in the vector (same name and area)*/
         bool exists(vector<Shape*> v) {
             for(Shape* s: v) {
-                if(s->get_shape_type() == this->shape_type && s->get_area() == this->get_area()) {
+                if(s->getShapeType() == this->shapeType && s->getArea() == this->getArea()) {
                     return true;
                 }
             }
@@ -33,15 +33,15 @@ class Shape {
 
 class Square : public Shape {
     private:
-        int side_size;
+        int sideSize;
 
     public:
-        Square(int side_size) : Shape("Square") {
-            this->side_size = side_size ;
+        Square(int sideSize) : Shape("Square") {
+            this->sideSize = sideSize ;
         }
 
-        int get_area() {
-            return side_size * side_size;
+        int getArea() {
+            return sideSize * sideSize;
         }
 };
 
@@ -57,7 +57,7 @@ class Triangle : public Shape {
             this->height = height;
         }
 
-        int get_area() {
+        int getArea() {
             return (base * height) / 2;
         }
 };
@@ -71,7 +71,7 @@ class Circle : public Shape {
             this->radius = radius;
         }
 
-        int get_area() {
+        int getArea() {
             return pi * radius * radius;
         }
 
@@ -80,10 +80,10 @@ class Circle : public Shape {
 /*Class to hold all static methods for excersises*/
 class Excercises {
         /*Returns the number of occurences of a given shape*/
-        static int count_by_shape(vector<Shape*> v, string shape_name) {
+        static int countByShape(vector<Shape*> v, string shape_name) {
             int total = 0;
             for(int i = 0; i < v.size(); i++) {
-                if(v[i]->get_shape_type() == shape_name) {
+                if(v[i]->getShapeType() == shape_name) {
                     total++;
                 }
             }
@@ -92,28 +92,28 @@ class Excercises {
         }
 
         /*Returns the biggest area of a given vector of shapes*/
-        static int largest_area(vector<Shape*> v) {
-            int largest = v[0]->get_area();
+        static int largestArea(vector<Shape*> v) {
+            int largest = v[0]->getArea();
             for(int i = 0; i < v.size(); i++) {
-                if(largest < v[i]->get_area()) {
-                    largest = v[i]->get_area();
+                if(largest < v[i]->getArea()) {
+                    largest = v[i]->getArea();
                 }
             }
             return largest;
         }
 
         /*Returns the average area of all the shapes in a vector*/
-        static int average_area(vector<Shape*> v) {
+        static int averageArea(vector<Shape*> v) {
             int total = 0;
             for(int i = 0; i < v.size(); i++) {
-                total += v[i]->get_area();
+                total += v[i]->getArea();
             }
             return total / v.size();
         }
 
         /*Returns wether a vector contains a duplicate of a shape. 
         A duplicate is defined by a shape having the same type and same area.*/
-        static bool has_duplicates(vector<Shape*> v) {
+        static bool hasDuplicates(vector<Shape*> v) {
             vector<Shape*> uniques;
             for(Shape* s: v) {
                 if (!s->exists(v)) {
@@ -127,9 +127,9 @@ class Excercises {
 
         /*Removes the first shape with the matching area, regardless of the type of shape.
         Does nothing if the a shape with that area does not exist.*/
-        static void remove_first(vector<Shape*> &v, int area) {
+        static void removeFirst(vector<Shape*> &v, int area) {
             for(int i = 0; i < v.size(); i++) {
-                if(v[i]->get_area() == area) {
+                if(v[i]->getArea() == area) {
                     v.erase(v.begin()+i);
                     break;
                 }
@@ -138,10 +138,10 @@ class Excercises {
 
         /*Removes all the shapes with the matching area, regardless of the type of shape.
         Does nothing if the no shapes with that area exist.*/
-        static void remove_all(vector<Shape*> &v, int area) {
+        static void removeAll(vector<Shape*> &v, int area) {
             int idx = 0;
             while(idx < v.size()) {
-                if(v[idx]->get_area() == area) v.erase(v.begin()+idx);
+                if(v[idx]->getArea() == area) v.erase(v.begin()+idx);
                 idx++;
             }
         }
@@ -150,7 +150,7 @@ class Excercises {
         A union is defined as a new vector containing unique elements from both vectors.
         Example: v1 = [0 1 2 3 4], v2 = [0 1 5 6 7], union(v1, v2) = [0 1 2 3 4 5 6 7]
         Utilize the exists() method to verify if a shape exists in a specific vector.*/
-        static vector<Shape*> vector_union(vector<Shape*> v1, vector<Shape*> v2) {
+        static vector<Shape*> vectorUnion(vector<Shape*> v1, vector<Shape*> v2) {
             for(Shape* s: v2) {
                 if(!s->exists(v1)) {
                     v1.push_back(s);
@@ -163,7 +163,7 @@ class Excercises {
         An intersection is defined as a new vector containing the elements that are contained in both vectors.
         Example: v1 = [0 1 2 3 4], v2 = [0 1 5 6 7], intersection(v1, v2) = [0 1]
         Utilize the exists() method to verify if a shape exists in a specific vector.*/
-        static vector<Shape*> vector_intersection(vector<Shape*> v1, vector<Shape*> v2) {
+        static vector<Shape*> vectorIntersection(vector<Shape*> v1, vector<Shape*> v2) {
             vector<Shape*> intersect;
             for(Shape* s: v1) {
                 if(s->exists(v2)) {
