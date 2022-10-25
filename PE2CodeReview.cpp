@@ -13,7 +13,7 @@ class Shape {
 
     public:
         Shape(string shape_name) { this->shape_type = shape_name; }
-        virtual int get_area();
+        virtual int get_area() = 0;
         string get_shape_type() {
             return this->shape_type;
         }
