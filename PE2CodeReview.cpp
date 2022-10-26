@@ -105,10 +105,14 @@ class Excercises {
 
         /*Returns the average area of all the shapes in a vector*/
         static int averageArea(vector<Shape*> v) {
+
+            if(v.size() == 0) return -1;
+
             double total = 0;
             for(int i = 0; i < v.size(); i++) {
                 total += v[i]->getArea();
             }
+
             return total / v.size();
         }
 
@@ -142,8 +146,12 @@ class Excercises {
         static void removeAll(vector<Shape*> &v, int area) {
             int idx = 0;
             while(idx < v.size()) {
-                if(v[idx]->getArea() == area) v.erase(v.begin()+idx);
-                idx++;
+                if(v[idx]->getArea() == area) { 
+                    v.erase(v.begin()+idx);
+                } else {
+                    idx++;
+                }
+                
             }
         }
 
