@@ -81,6 +81,7 @@ class Circle : public Shape {
 /*Class to hold all static methods for excersises*/
 class Excercises {
         /*Returns the number of occurences of a given shape*/
+        public:
         static int countByShape(vector<Shape*> v, string shape_name) {
             int total = 0;
             for(int i = 0; i < v.size(); i++) {
@@ -104,7 +105,7 @@ class Excercises {
         }
 
         /*Returns the average area of all the shapes in a vector*/
-        static int averageArea(vector<Shape*> v) {
+        static double averageArea(vector<Shape*> v) {
 
             if(v.size() == 0) return -1;
 
@@ -185,3 +186,136 @@ class Excercises {
             return intersect;
         }
 };
+
+// HELPER METHOD TO DISPLAY VECTOR CONTENTS
+void printVector(vector<Shape*> v) {
+    cout << "Vector contents: " << endl;
+
+    if(v.empty()) {
+        cout << "Empty" << endl;
+        return;
+    } 
+
+    for(Shape* s: v) {
+        cout << s->getShapeType() + " ";
+        cout << s->getArea();
+        cout << ", ";
+    }
+    cout << endl;
+}
+
+int main() {
+    
+    Square* s1 = new Square(4);
+    Square* s2 = new Square(5);
+    Square* s3 = new Square(7);
+    Square* s4 = new Square(19);
+    Square* s5 = new Square(13);
+
+    Circle* c1 = new Circle(2);
+    Circle* c2 = new Circle(4);
+    Circle* c3 = new Circle(2);
+    Circle* c4 = new Circle(7);
+    Circle* c5 = new Circle(13);
+
+    Triangle* t1 = new Triangle(2, 7);
+    Triangle* t2 = new Triangle(4, 3);
+    Triangle* t3 = new Triangle(2, 9);
+    Triangle* t4 = new Triangle(7, 2);
+    Triangle* t5 = new Triangle(13, 7);
+
+    vector<Shape*> v1;
+    v1.push_back(s1);
+    v1.push_back(c1);
+    v1.push_back(t1);
+    v1.push_back(t2);
+
+    printVector(v1);
+    cout << "-----------------" << endl;
+    cout << "Largest area: ";
+    cout << Excercises::largestArea(v1) << endl;
+
+    cout << "-----------------" << endl;
+    cout << "Counts of triangles: ";
+    cout << Excercises::countByShape(v1, "Triangle") << endl;
+
+    cout << "-----------------" << endl;
+    cout << "Average area: ";
+    cout << Excercises::averageArea(v1) << endl;
+
+    cout << "-----------------" << endl;
+    cout << "Has duplicates?: ";
+    cout << Excercises::hasDuplicates(v1) << endl;
+
+    cout << "-----------------" << endl;
+    vector<Shape*> v2(v1);
+    v2.push_back(t1);
+    printVector(v2);
+
+    cout << "-----------------" << endl;
+    cout << "Has duplicates?: ";
+    cout << Excercises::hasDuplicates(v2) << endl;
+
+    cout << "-----------------" << endl;
+    cout << "Removing first element with area of 7" << endl;
+    Excercises::removeFirst(v2, 7);
+    printVector(v2);
+
+    cout << "-----------------" << endl;
+    v2.push_back(t1);
+    printVector(v2);
+    
+    cout << "-----------------" << endl;
+    cout << "Removing all elements with area of 7" << endl;
+    Excercises::removeAll(v2, 7);
+    printVector(v2);
+
+    cout << "-----------------" << endl;
+    vector<Shape*> v3;
+    vector<Shape*> v4;
+
+    v3.push_back(t1);
+    v3.push_back(t2);
+    v4.push_back(s1);
+    v4.push_back(s2);
+
+    printVector(v3);
+    printVector(v4);
+    cout << "-----------------" << endl;
+    cout << "Union of vectors" << endl;
+    vector<Shape*> v5 = Excercises::vectorUnion(v3, v4);
+    printVector(v5);
+
+    cout << "-----------------" << endl;
+    cout << "Intersection of vectors" << endl;
+    v5 = Excercises::vectorIntersection(v3, v4);
+    printVector(v5);
+
+    cout << "-----------------" << endl;
+    vector<Shape*> v6;
+    vector<Shape*> v7;
+
+    v6.push_back(t1);
+    v6.push_back(t2);
+    v7.push_back(s1);
+    v7.push_back(t2);
+
+    printVector(v6);
+    printVector(v7);
+
+    cout << "-----------------" << endl;
+    cout << "Intersection of vectors" << endl;
+    vector<Shape*> v10 = Excercises::vectorIntersection(v6, v7);
+    printVector(v10);
+
+
+
+
+
+
+
+
+    
+
+
+}
